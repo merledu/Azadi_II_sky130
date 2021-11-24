@@ -11,8 +11,8 @@
 
 // Author: Stefan Mach <smach@iis.ee.ethz.ch>
 
-//`include "/home/merl-lab/fyp/azadi/src/fpnew/src/common_cells/include/common_cells/registers.svh"
-//`include "registers.svh"
+`include "common_cells/registers.svh"
+
 module fpnew_divsqrt_multi #(
   parameter fpnew_pkg::fmt_logic_t   FpFmtConfig  = '1,
   // FPU configuration
@@ -198,11 +198,12 @@ module fpnew_divsqrt_multi #(
           out_valid = 1'b1; // try to commit result downstream
           // If downstream accepts our result
           if (out_ready) begin
-            state_d = IDLE; // we anticipate going back to idling..
             if (in_valid_q && unit_ready) begin // ..unless new work comes in
               in_ready = 1'b1; // we acknowledge the instruction
-              state_d  = BUSY; // and stay busy with it
+              // state_d  = BUSY; // and stay busy with it
+              state_d  = IDLE;
             end
+            // state_d = IDLE; // we anticipate going back to idling..
           // Otherwise if downstream is not ready for the result
           end else begin
             hold_result = 1'b1; // activate the hold register
@@ -236,7 +237,7 @@ module fpnew_divsqrt_multi #(
     end
   end
 
-  // FSM status register (asynch active low rst_ni)
+  // FSM status register (asynch active low reset)
   `FF(state_q, state_d, IDLE)
 
   // Hold additional information while the operation is in progress
@@ -276,7 +277,7 @@ module fpnew_divsqrt_multi #(
   // Adjust result width and fix FP8
   assign adjusted_result = result_is_fp8_q ? unit_result >> 8 : unit_result;
 
-  // The Hold register (load, no rst_ni)
+  // The Hold register (load, no reset)
   `FFLNR(held_result_q, adjusted_result, hold_result, clk_i)
   `FFLNR(held_status_q, unit_status,     hold_result, clk_i)
 

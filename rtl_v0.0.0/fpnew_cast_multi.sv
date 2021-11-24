@@ -11,8 +11,8 @@
 
 // Author: Stefan Mach <smach@iis.ee.ethz.ch>
 
-//`include "/home/merl-lab/fyp/azadi/src/fpnew/src/common_cells/include/coregisters.svh"
-//`include "registers.svh"
+`include "common_cells/registers.svh"
+
 module fpnew_cast_multi #(
   parameter fpnew_pkg::fmt_logic_t   FpFmtConfig  = '1,
   parameter fpnew_pkg::ifmt_logic_t  IntFmtConfig = '1,
@@ -542,7 +542,8 @@ module fpnew_cast_multi #(
     .effective_subtraction_i ( 1'b0              ), // no operation happened
     .abs_rounded_o           ( rounded_abs       ),
     .sign_o                  ( rounded_sign      ),
-    .exact_zero_o            ( result_true_zero  )
+    .exact_zero_o            ( result_true_zero  ),
+    .op_i                    ( op_i              )
   );
 
   logic [NUM_FORMATS-1:0][WIDTH-1:0] fmt_result;
