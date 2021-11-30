@@ -25,7 +25,9 @@ module fpnew_rounding #(
   output logic [AbsWidth-1:0]  abs_rounded_o,           // absolute value without sign
   output logic                 sign_o,
   // Output classification
-  output logic                 exact_zero_o             // output is an exact zero
+  output logic                 exact_zero_o,            // output is an exact zero
+  // Testing input
+  input fpnew_pkg::operation_e op_i
 );
 
   logic round_up; // Rounding decision
@@ -47,7 +49,7 @@ module fpnew_rounding #(
           2'b01: round_up = 1'b0;           // < ulp/2 away, round down
           2'b10: round_up = abs_value_i[0]; // = ulp/2 away, round towards even result
           2'b11: round_up = 1'b1;           // > ulp/2 away, round up
-          //default: round_up = fpnew_pkg::DONT_CARE;
+          default: round_up = fpnew_pkg::DONT_CARE;
         endcase
       fpnew_pkg::RTZ: round_up = 1'b0; // always round down
       fpnew_pkg::RDN: round_up = (| round_sticky_bits_i) ? sign_i  : 1'b0; // to 0 if +, away if -
@@ -66,7 +68,7 @@ module fpnew_rounding #(
   // In case of effective subtraction (thus signs of addition operands must have differed) and a
   // true zero result, the result sign is '-' in case of RDN and '+' for other modes.
   assign sign_o = (exact_zero_o && effective_subtraction_i)
-                  ? (rnd_mode_i == fpnew_pkg::RDN)
+                  ? ((rnd_mode_i == fpnew_pkg::RDN) & (op_i != fpnew_pkg::MUL))
                   : sign_i;
 
 endmodule

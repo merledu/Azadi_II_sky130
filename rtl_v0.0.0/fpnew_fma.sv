@@ -11,8 +11,8 @@
 
 // Author: Stefan Mach <smach@iis.ee.ethz.ch>
 
-//`include "/home/merl-lab/fyp/azadi/src/fpnew/src/common_cells/include/common_cells/registers.svh"
-//`include "registers.svh"
+`include "common_cells/registers.svh"
+
 module fpnew_fma #(
   parameter fpnew_pkg::fp_format_e   FpFormat    = fpnew_pkg::fp_format_e'(0),
   parameter int unsigned             NumPipeRegs = 0,
@@ -530,7 +530,7 @@ module fpnew_fma #(
   // or right of the (non-carry) MSB of the sum.
   always_comb begin : small_norm
     // Default assignment, discarding carry bit
-    {final_mantissa[23:0], sum_sticky_bits} = sum_shifted;
+    {final_mantissa, sum_sticky_bits} = sum_shifted;
     final_exponent                    = normalized_exponent;
 
     // The normalized sum has overflown, align right and fix exponent
@@ -593,7 +593,8 @@ module fpnew_fma #(
     .effective_subtraction_i ( effective_subtraction_q ),
     .abs_rounded_o           ( rounded_abs             ),
     .sign_o                  ( rounded_sign            ),
-    .exact_zero_o            ( result_zero             )
+    .exact_zero_o            ( result_zero             ),
+    .op_i                    ( op_i                    )
   );
 
   // Classification after rounding
