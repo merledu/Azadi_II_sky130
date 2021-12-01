@@ -11,8 +11,8 @@
     
 
 
-read_mmmc ../run3/invs/invs.mmmc.tcl
+read_mmmc invs.mmmc.tcl
 
-read_netlist ../run3/invs/invs.v
+read_netlist invs.v
 
 init_design

@@ -29,25 +29,25 @@ set_db timing_time_unit 1ns
 # Design Import
 ################################################################################
 ## Reading FlowKit settings file
-source ../run3/invs/invs.flowkit_settings.tcl
+source invs.flowkit_settings.tcl
 
-source ../run3/invs/invs.invs_init.tcl
-update_analysis_view -name view_slow -constraint_mode functional_slow -latency_file ../run3/invs/invs.view_slow_latency.sdc
-update_analysis_view -name view_fast -constraint_mode functional_fast -latency_file ../run3/invs/invs.view_fast_latency.sdc
-update_analysis_view -name view_typical -constraint_mode functional_typical -latency_file ../run3/invs/invs.view_typical_latency.sdc
+source invs.invs_init.tcl
+update_analysis_view -name view_slow -constraint_mode functional_slow -latency_file invs.view_slow_latency.sdc
+update_analysis_view -name view_fast -constraint_mode functional_fast -latency_file invs.view_fast_latency.sdc
+update_analysis_view -name view_typical -constraint_mode functional_typical -latency_file invs.view_typical_latency.sdc
 
 # Reading metrics file
 ################################################################################
-read_metric -id current ../run3/invs/invs.metrics.json
+read_metric -id current invs.metrics.json
 
 ## Reading common preserve file for dont_touch and dont_use preserve settings
-source -quiet ../run3/invs/invs.preserve.tcl
+source -quiet invs.preserve.tcl
 
 
 
 # Mode Setup
 ################################################################################
-source ../run3/invs/invs.mode
+source invs.mode
 
 
 # MSV Setup
@@ -59,16 +59,16 @@ source ../run3/invs/invs.mode
       if { [is_attribute -obj_type port original_name] &&
            [is_attribute -obj_type pin original_name] &&
            [is_attribute -obj_type pin is_phase_inverted]} {
-        source ../run3/invs/invs.wnm_attrs.tcl
+        source invs.wnm_attrs.tcl
       }
     
 
 # Reading NDR file
-source ../run3/invs/invs.ndr.tcl
+source invs.ndr.tcl
 
 # Reading minimum routing layer data file
 ################################################################################
-eval_legacy {gpsPrivate::readMinLayerCstr -file ../run3/invs/invs.min_layer} 
+eval_legacy {gpsPrivate::readMinLayerCstr -file invs.min_layer} 
 
 eval_legacy {set edi_pe::pegConsiderMacroLayersUnblocked 1}
 eval_legacy {set edi_pe::pegPreRouteWireWidthBasedDensityCalModel 1}

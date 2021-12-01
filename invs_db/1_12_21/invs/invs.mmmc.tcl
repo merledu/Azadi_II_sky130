@@ -69,11 +69,11 @@ create_delay_corner -name delay_corner_typical \
 
 ## constraint_mode
 create_constraint_mode -name functional_slow \
-    -sdc_files { ../run3/invs/invs.functional_slow.sdc }
+    -sdc_files { invs.functional_slow.sdc }
 create_constraint_mode -name functional_fast \
-    -sdc_files { ../run3/invs/invs.functional_fast.sdc }
+    -sdc_files { invs.functional_fast.sdc }
 create_constraint_mode -name functional_typical \
-    -sdc_files { ../run3/invs/invs.functional_typical.sdc }
+    -sdc_files { invs.functional_typical.sdc }
 
 ## analysis_view
 create_analysis_view -name view_slow \
