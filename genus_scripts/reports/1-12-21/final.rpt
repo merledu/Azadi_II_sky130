@@ -1,0 +1,84 @@
+
+
+Working Directory = /home/sahmad/genus_runs/azadi_ii/run3
+QoS Summary for azadi_soc_top_caravel
+================================================================================
+Metric                          syn_generic     syn_map         syn_opt        
+================================================================================
+
+View : view_slow
+Slack (ps):                   -11,549          -3,736            -890
+  R2R (ps):                   -11,549          -3,736            -890
+  I2R (ps):                    14,068          11,287          11,287
+  R2O (ps):                    15,664          15,910          15,910
+  I2O (ps):                  no_value        no_value        no_value
+  CG  (ps):                    22,351          22,700          22,700
+TNS (ps):                    -783,098        -114,882         -22,207
+  R2R (ps):                  -783,098        -114,882         -22,207
+  I2R (ps):                         0               0               0
+  R2O (ps):                         0               0               0
+  I2O (ps):                  no_value        no_value        no_value
+  CG  (ps):                         0               0               0
+Failing Paths:                    308              35              35
+
+View : view_typical
+Slack (ps):                     6,264           9,104          10,009
+  R2R (ps):                     6,264           9,104          10,009
+  I2R (ps):                    15,040          14,236          14,236
+  R2O (ps):                    13,188          13,269          13,269
+  I2O (ps):                  no_value        no_value        no_value
+  CG  (ps):                    19,100          19,232          19,232
+TNS (ps):                           0               0               0
+  R2R (ps):                         0               0               0
+  I2R (ps):                         0               0               0
+  R2O (ps):                         0               0               0
+  I2O (ps):                  no_value        no_value        no_value
+  CG  (ps):                         0               0               0
+Failing Paths:                      0               0               0
+
+View : view_fast
+Slack (ps):                     7,869           9,227           9,798
+  R2R (ps):                     7,869           9,227           9,798
+  I2R (ps):                    13,480          13,060          13,060
+  R2O (ps):                    10,809          10,836          10,836
+  I2O (ps):                  no_value        no_value        no_value
+  CG  (ps):                    16,097          16,165          16,165
+TNS (ps):                           0               0               0
+  R2R (ps):                         0               0               0
+  I2R (ps):                         0               0               0
+  R2O (ps):                         0               0               0
+  I2O (ps):                  no_value        no_value        no_value
+  CG  (ps):                         0               0               0
+Failing Paths:                      0               0               0
+
+Cell Area:                  1,099,053         535,036         541,382
+Total Cell Area:            1,099,053         535,036         541,382
+Leaf Instances:                99,664          56,495          57,784
+Total Instances:               99,664          56,495          57,784
+Utilization (%):                 0.00            0.00            0.00
+Tot. Net Length (um):        no_value        no_value        no_value
+Avg. Net Length (um):        no_value        no_value        no_value
+Route Overflow H (%):        no_value        no_value        no_value
+Route Overflow V (%):        no_value        no_value        no_value
+MBCI(%) (bits/gate) :            0.00            0.00            0.00
+Norm Cong Hotspot Area:
+  Max Cong:                  no_value        no_value        no_value
+  Tot Cong:                  no_value        no_value        no_value
+================================================================================
+CPU  Runtime (h:m:s):        00:26:11        00:40:38        01:44:50
+Real Runtime (h:m:s):        00:26:25        00:27:05        01:33:01
+CPU  Elapsed (h:m:s):        00:26:26        01:07:04        02:51:52
+Real Elapsed (h:m:s):        00:26:35        00:53:37        02:26:40
+Memory (MB):                  2293.95         2320.37         2285.38
+================================================================================
+================================================================================
+Flow Settings:
+================================================================================
+Total Runtime (h:m:s): 02:27:03
+Total Memory (MB):     2285.38
+Executable Version:    20.11-s111_1
+================================================================================
+Total Cell Area =  Cell Area + Physical Cell Area
+Total Instances =  Leaf Instances + Physical Instances
+
+
