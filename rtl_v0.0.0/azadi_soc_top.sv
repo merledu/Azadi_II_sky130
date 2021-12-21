@@ -371,24 +371,35 @@ instr_mem_top iccm_adapter(
 );
 
 
-sky130_sram_1kbyte_1rw1r_32x256_8 u_iccm (
-`ifdef USE_POWER_PINS
-  .vccd1 (vccd1),
-  .vssd1 (vssd1),
-`endif
-    .clk0      (clk_i), // clock
-    .csb0      (instr_csb), // active low chip select
-    .web0      (instr_we), // active low write control
-    .wmask0    (instr_wmask), // write mask
-    .addr0     (instr_addr[7:0]),
-    .din0      (instr_wdata),
-    .dout0     (instr_rdata),
-    .clk1     (1'b0),
-    .csb1     (1'b1),
-    .addr1    ('0),
-    .dout1    ()
-    );
+// sky130_sram_1kbyte_1rw1r_32x256_8 u_iccm (
+// `ifdef USE_POWER_PINS
+//   .vccd1 (vccd1),
+//   .vssd1 (vssd1),
+// `endif
+//     .clk0      (clk_i), // clock
+//     .csb0      (instr_csb), // active low chip select
+//     .web0      (instr_we), // active low write control
+//     .wmask0    (instr_wmask), // write mask
+//     .addr0     (instr_addr[7:0]),
+//     .din0      (instr_wdata),
+//     .dout0     (instr_rdata),
+//     .clk1     (1'b0),
+//     .csb1     (1'b1),
+//     .addr1    ('0),
+//     .dout1    ()
+//     );
 
+sram_32x1024 u_iccm(
+  .clk_i	(clk_i),
+  .rst_ni	(system_rst_ni),
+  
+  .csb_i	(instr_csb),
+  .web_i	(instr_we),
+  .wmask_i	(instr_wmask),
+  .addr_i	(instr_addr),
+  .wdata_i	(instr_wdata),
+  .rdata_o	(instr_rdata)
+);
 
 // dummy data memory
 
@@ -411,7 +422,7 @@ data_mem_top dccm_adapter(
 );
 
 
-
+/*
 sky130_sram_1kbyte_1rw1r_32x256_8 u_dccm (
 `ifdef USE_POWER_PINS
   .vccd1 (vccd1),
@@ -428,5 +439,17 @@ sky130_sram_1kbyte_1rw1r_32x256_8 u_dccm (
   .csb1      (1'b1),
   .addr1     ('0),
   .dout1     ()
-  );
+  );*/
+  
+sram_32x1024 u_dccm(
+  .clk_i	(clk_i),
+  .rst_ni	(system_rst_ni),
+  
+  .csb_i	(data_csb),
+  .web_i	(data_we),
+  .wmask_i	(data_wmask),
+  .addr_i	(data_addr),
+  .wdata_i	(data_wdata),
+  .rdata_o	(data_rdata)
+);
 endmodule
