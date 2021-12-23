@@ -11,10 +11,10 @@ module uart_core (
     output logic tx_o,
     input  logic rx_i,
     
+
     output logic intr_tx,
     output logic intr_rx 
 );
-    
     localparam ADDR_CTRL = 0; // write
     localparam ADDR_TX   = 4; // write
     localparam ADDR_RX   = 8; // read
@@ -33,20 +33,19 @@ module uart_core (
     logic [15:0] control;
     logic [7:0]  tx;
     logic [7:0]  rx;
-    logic [7:0]  rx_val;
+    logic [31:0]  rx_val;
     logic        rx_en;
     logic        tx_en;
     logic        rx_status;
     logic        rx_clr;
     logic        rx_done;
-    logic 	 rx_intr;
     logic 	 rx_sbit;
     logic 	 rx_fifo_rst;
     logic 	 rx_fifo_clr;
     logic [31:0] rx_timeout;
     logic 	 addr_rx_fifo;
     logic        addr_tx_fifo;
-    logic  [8:0] tx_fifo_data;
+    logic  [31:0] tx_fifo_data;
     logic        tx_fifo_init;
     logic 	 tx_fifo_op;
     logic 	 tx_fifo_re;
@@ -57,6 +56,7 @@ module uart_core (
     logic 	 tx_fifo_clear;
     logic 	 tx_fifo_reset;
     logic  [8:0] rx_buffer_size;
+    logic  [8:0] fifo_read_size;
     
     always_ff @(posedge clk_i or negedge rst_ni) begin
         if(~rst_ni) begin
@@ -101,18 +101,20 @@ module uart_core (
       end
   
   assign addr_tx_fifo = (addr == ADDR_TX) ? 1'b1: 1'b0;
-  assign tx_fifo_re   = (tx_done & tx_fifo_data[0]) | tx_fifo_init;
+  assign tx_fifo_re   = ((tx_done & tx_fifo_data[0]) & (fifo_read_size < 256)) | tx_fifo_init ;
   assign tx_fifo_we   = addr_tx_fifo & we;
   assign tx_en_sel    = tx_en & tx_fifo_data[0];
   
   assign addr_rx_fifo = (addr == ADDR_RX) ? 1'b1: 1'b0;
   //assign rx_timeout   = (addr == RX_TIMEOUT) & we ? wdata : '0;
   
-    
-buffer_control #(
-  .BUFFER_DEPTH	(256),
-  .BUFFER_WIDTH	(8),
-  .ADDR_WIDTH	(8)
+ logic test;
+generic_fifo #(
+  .DWIDTH	(8),
+  .AWIDTH	(8),
+  .FDEPTH	(64),
+  .BYTE_WRITE   (0),
+  .BYTE_READ    (1)
 ) write_fifo (
   .clk_i	(clk_i),
   .rst_ni	(rst_ni),
@@ -121,11 +123,12 @@ buffer_control #(
   .we_i		(tx_fifo_we),
   .clr_i	(tx_fifo_clear),
   .rst_i	(tx_fifo_reset),
-  .wdata_i	(wdata[7:0]),
+  .wdata_i	(wdata),
   
   .buffer_full	(),
   .rdata_o	(tx_fifo_data),
-  .bsize_o	()
+  .bsize_o	(),
+  .r_size_o     (fifo_read_size)
 );
     
 uart_tx u_tx (
@@ -139,10 +142,12 @@ uart_tx u_tx (
 );
 
 
-buffer_control #(
-  .BUFFER_DEPTH	(256),
-  .BUFFER_WIDTH	(8),
-  .ADDR_WIDTH	(8)
+generic_fifo #(
+  .DWIDTH	(8),
+  .AWIDTH	(8),
+  .FDEPTH	(256),
+  .BYTE_WRITE   (1),
+  .BYTE_READ    (0)
 ) read_fifo (
   .clk_i	(clk_i),
   .rst_ni	(rst_ni),
@@ -155,7 +160,8 @@ buffer_control #(
   
   .buffer_full	(),
   .rdata_o	(rx_val),
-  .bsize_o	(rx_buffer_size)
+  .bsize_o	(rx_buffer_size),
+  .r_size_o     ()
 );
     
 uart_rx u_rx(
@@ -177,16 +183,18 @@ rx_timer rx_time(
   .rx_start_i	(rx_sbit),
   .wdata_i	(rx_timeout),
   
-  .rx_timeout_o	(rx_intr)
+  .rx_timeout_o	(intr_rx)
 
 );
+
+// assign test = intr_rx & uart_init_rx;
 
 always_ff @(posedge clk_i or negedge rst_ni) begin
     if(!rst_ni) begin
         rx_status <= 1'b0;
     end else begin
         
-	if (rx_intr) begin
+	if (intr_rx) begin
 	   rx_status <= 1'b1;	
 	end else if(!rx_clr) begin
 	   rx_status <= 1'b0;	
@@ -205,7 +213,7 @@ end
   end
  end
   
- assign rdata = (addr == 20)? rx_status : (addr == ADDR_RX)? rx_val : ((addr == RX_BUFFER_SIZE)&we) ? rx_buffer_size : 0;   
+ assign rdata = (addr == 20)? rx_status : (addr == ADDR_RX)? rx_val : ((addr == RX_BUFFER_SIZE)) ? rx_buffer_size : 0;   
       
    
 endmodule

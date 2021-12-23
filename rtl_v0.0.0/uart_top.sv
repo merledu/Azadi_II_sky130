@@ -39,7 +39,6 @@ uart_core u_uart_core(
     .addr    (addr),    
     .tx_o    (tx_o),
     .rx_i    (rx_i),
-    
     .intr_tx (intr_tx),
     .intr_rx (intr_rx)
 );
