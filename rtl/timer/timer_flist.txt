@@ -1,0 +1,20 @@
+# paths 
+<path to repo home>/rtl/timer
+<path to repo home>/rtl/common
+
+# top module = rv_timer.sv
+
+# bus package
+tlul_pkg.sv
+
+# timer package
+rv_timer_reg_pkg.sv
+
+# bus modules
+tlul_adapter_reg.sv
+tlul_err.sv
+
+
+# timer modules
+rv_timer_reg_top.sv  
+rv_timer.sv

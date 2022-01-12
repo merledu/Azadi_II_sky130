@@ -1,0 +1,13 @@
+# paths 
+<path to repo home>/rtl/soc_top
+<path to repo home>/rtl/common
+
+# top module = azadi_soc_top_caravel
+
+# bus package
+tlul_pkg.sv
+
+#soc modules
+azadi_soc_top_caravel.sv  
+azadi_soc_top.sv  
+rstmgr.sv

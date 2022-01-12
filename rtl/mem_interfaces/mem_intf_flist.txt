@@ -1,0 +1,19 @@
+# paths 
+<path to repo home>/rtl/mem_interfaces
+<path to repo home>/rtl/common
+
+# top module 1 = data_mem_top
+# top module 2 = instr_mem_top
+
+# bus package
+tlul_pkg.sv
+
+# bus modules
+tlul_sram_adapter.sv
+tlul_err.sv
+fifo_sync.sv
+
+# mem intf modules
+data_mem_top.sv  
+instr_mem_top.sv
+

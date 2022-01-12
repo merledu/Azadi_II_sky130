@@ -1,0 +1,10 @@
+# paths 
+<path to repo home>/rtl/programmer
+
+# top module = programmer
+
+# programmer modules
+iccm_controller.v  
+programmer.sv  
+uart_rx_prog.v
+

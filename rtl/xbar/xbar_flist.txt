@@ -1,0 +1,21 @@
+# paths 
+<path to repo home>/rtl/xbar
+<path to repo home>/rtl/common
+
+# top module = tl_xbar_main
+
+# bus package
+tlul_pkg.sv
+
+# xbar package
+tl_main_pkg.sv 
+ 
+# bus modules
+tlul_socket_1n.sv
+tlul_err_resp.sv
+tlul_fifo_sync.sv
+fifo_sync.sv
+
+
+# xbar modules
+tl_xbar_main.sv

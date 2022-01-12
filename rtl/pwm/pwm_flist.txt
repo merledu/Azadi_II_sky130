@@ -1,0 +1,17 @@
+# paths 
+<path to repo home>/rtl/pwm
+<path to repo home>/rtl/common
+
+# top module = pwm_top
+
+# bus package
+tlul_pkg.sv
+
+
+# bus modules
+tlul_adapter_reg.sv
+tlul_err.sv
+
+# pwm module
+pwm_top.sv  
+pwm.v
