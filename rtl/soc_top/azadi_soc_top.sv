@@ -143,24 +143,24 @@ brq_core_top #() u_top (
     .tl_d_o (lsu_to_xbar),
 
     //.test_en_i   (1'b0),     // enable all clk_i gates for testing
-
+/*
     .hart_id_i   (32'b0), 
     .boot_addr_i (32'h20000000),
 
         // Interrupt inputs
-    .irq_software_i (1'b0),
+    .irq_software_i (1'b0),*/
     .irq_timer_i    (intr_timer),
     .irq_external_i (intr_req),
-    .irq_fast_i     ('0),
-    .irq_nm_i       (1'b0),       // non-maskeable interrupt
-
-    // Debug Interface
-    .debug_req_i    ('0),
-    // CPU Control Signals
-    .fetch_enable_i (1'b1),
-    .alert_minor_o  (),
-    .alert_major_o  (),
-    .core_sleep_o   ()
+//     .irq_fast_i     ('0),
+//     .irq_nm_i       (1'b0),       // non-maskeable interrupt
+// 
+//     // Debug Interface
+//     .debug_req_i    ('0),
+//     // CPU Control Signals
+//     .fetch_enable_i (1'b1),
+//     .alert_minor_o  (),
+//     .alert_major_o  (),
+//     .core_sleep_o   ()
 );
 
 

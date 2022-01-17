@@ -36,24 +36,24 @@ module brq_core_top #(
 
    // input  logic        test_en_i,     // enable all clk_i gates for testing
 
-    input  logic [31:0] hart_id_i,
-    input  logic [31:0] boot_addr_i,
+//     input  logic [31:0] hart_id_i,
+//     input  logic [31:0] boot_addr_i,
 
         // Interrupt inputs
-    input  logic        irq_software_i,
+//     input  logic        irq_software_i,
     input  logic        irq_timer_i,
     input  logic        irq_external_i,
-    input  logic [14:0] irq_fast_i,
-    input  logic        irq_nm_i,       // non-maskeable interrupt
+/*    input  logic [14:0] irq_fast_i,
+    input  logic        irq_nm_i, */      // non-maskeable interrupt
 
     // Debug Interface
-    input  logic        debug_req_i,
+//     input  logic        debug_req_i,
 
         // CPU Control Signals
-    input  logic        fetch_enable_i,
-    output logic        alert_minor_o,
-    output logic        alert_major_o,
-    output logic        core_sleep_o
+//     input  logic        fetch_enable_i,
+//     output logic        alert_minor_o,
+//     output logic        alert_major_o,
+//     output logic        core_sleep_o
 );
 import brq_pkg::*;
 
@@ -107,8 +107,8 @@ brq_core #(
 
    // .test_en_i (test_en_i),     // enable all clk_i gates for testing
 
-    .hart_id_i  (hart_id_i),
-    .boot_addr_i(boot_addr_i),
+    .hart_id_i  ('0),
+    .boot_addr_i(32'h20000000),
 
     // Instruction memory interface
     .instr_req_o    (instr_req),
@@ -130,14 +130,14 @@ brq_core #(
     .data_err_i     (data_err),
 
     // Interrupt inputs
-    .irq_software_i (irq_software_i),
+    .irq_software_i ('0),
     .irq_timer_i    (irq_timer_i),
     .irq_external_i (irq_external_i),
-    .irq_fast_i     (irq_fast_i),
-    .irq_nm_i       (irq_nm_i),       // non-maskeable interrupt
+    .irq_fast_i     ('0),
+    .irq_nm_i       ('0),       // non-maskeable interrupt
 
     // Debug Interface
-    .debug_req_i     (debug_req_i),
+    .debug_req_i     ('0),
 
     // RISC-V Formal Interface
     // Does not comply with the coding standards of _i/_o suffixes, but follows
@@ -169,10 +169,10 @@ brq_core #(
 `endif
 
     // CPU Control Signals
-    .fetch_enable_i (fetch_enable_i),
-    .alert_minor_o (alert_minor_o),
-    .alert_major_o (alert_major_o),
-    .core_sleep_o (core_sleep_o)
+    .fetch_enable_i ('1),
+    .alert_minor_o (),
+    .alert_major_o (),
+    .core_sleep_o ()
 );
 
 tlul_host_adapter #(
