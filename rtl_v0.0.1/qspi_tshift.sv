@@ -19,15 +19,15 @@ module qspi_tshift
   
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if(!rst_ni) begin
-	bit_index <= '0;
+	bit_index <= 6'b0;
     end else if(busy_i) begin
       if ((bit_index != tsize_i)) begin
-	bit_index <= bit_index + 4;
+	bit_index <= bit_index + 6'd4;
       end else begin
-	bit_index <= '0;
+	bit_index <= 6'b0;
       end
     end else begin
-	bit_index <= '0;
+	bit_index <= 6'b0;
     end
   end
   

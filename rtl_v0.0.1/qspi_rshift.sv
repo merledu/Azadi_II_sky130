@@ -20,19 +20,19 @@ module qspi_rshift
 
   always_ff @(posedge clk_i or negedge rst_ni) begin
     if(!rst_ni) begin
-	bit_index <= '0;
-	max_index <= 6'd0;
+	bit_index <= 6'b0;
+	max_index <= 6'b0;
     end else if(busy_i) begin
       if ((bit_index != rsize_i)) begin
 	max_index <= 6'd4;
 	bit_index <= bit_index + max_index;
       end else begin
-	bit_index <= '0;
-	max_index <= 6'd0;
+	bit_index <= 6'b0;
+	max_index <= 6'b0;
       end
     end else begin
-	bit_index <= '0;
-	max_index <= 6'd0;
+	bit_index <= 6'b0;
+	max_index <= 6'b0;
     end
   end
   

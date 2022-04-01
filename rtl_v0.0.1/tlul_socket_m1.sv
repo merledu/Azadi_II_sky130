@@ -18,7 +18,7 @@
 //   DRspDepth:     Same as HReqDepth but for device response FIFO.
 
 module tlul_socket_m1 #(
-  parameter int unsigned  M         = 4,
+  parameter int unsigned  M         = 2,
   parameter bit [M-1:0]   HReqPass  = {M{1'b1}},
   parameter bit [M-1:0]   HRspPass  = {M{1'b1}},
   parameter bit [M*4-1:0] HReqDepth = {M{4'h2}},

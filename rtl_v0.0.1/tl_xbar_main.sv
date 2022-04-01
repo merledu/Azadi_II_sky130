@@ -43,7 +43,7 @@ module tl_xbar_main (
 // host LSU
   tlul_pkg::tl_h2d_t brqlsu_to_s1n;
   tlul_pkg::tl_d2h_t s1n_to_brqlsu;
-  logic [2:0] device_sel;
+  logic [3:0] device_sel;
 
   tlul_pkg::tl_h2d_t brqifu_to_s1n;
   tlul_pkg::tl_d2h_t s1n_to_brqifu;
@@ -153,10 +153,6 @@ module tl_xbar_main (
 // host 2 socket
 
   tlul_socket_1n #(
-    .HReqDepth (4'h0),
-    .HRspDepth (4'h0),
-    .DReqDepth (36'h0),
-    .DRspDepth (36'h0),
     .N         (8)
   ) host_lsu (
     .clk_i        (clk_i),
@@ -167,13 +163,26 @@ module tl_xbar_main (
     .tl_d_i       (h_dv_i),
     .dev_select_i (device_sel)
   );
+/*
 
+ always_comb begin
+   tl_qspi_o = '0;
+ //  sm1_to_s1n[1] = '0;
+ //  sm1_to_s1n[0] = '0;
+   if(device_sel == 4'd7) begin
+      tl_qspi_o     = s1n_to_sm1[0];
+      sm1_to_s1n[0] = tl_qspi_i;
+     // sm1_to_s1n[1] = '0;
+   end else if(device_sel_2 == 2'd1) begin
+      tl_qspi_o     = s1n_to_sm1[1];
+      sm1_to_s1n[1] = tl_qspi_i;
+     // sm1_to_s1n[0] = '0;
+   end
+
+ end
+*/
 
   tlul_socket_m1 #(
-    .HReqDepth (8'h0),
-    .HRspDepth (8'h0),
-    .DReqDepth (4'h0),
-    .DRspDepth (4'h0),
     .M         (2)
   ) QSPI (
     .clk_i        (clk_i),

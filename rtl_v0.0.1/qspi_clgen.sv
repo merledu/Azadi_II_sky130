@@ -17,44 +17,17 @@ module qspi_clgen (
   logic cnt_zero;
   logic cnt_one;
   logic sclk;
-  
-  assign cnt_zero = cnt == {16 {1'b0}};
-  assign cnt_one = cnt == {{15 {1'b0}}, 1'b1};
-  
-  always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (~rst_ni) begin
-	cnt <= {16 {1'b1}};
-    end else if (!enable || cnt_zero) begin
-	cnt <= divider;
-    end else begin
-	cnt <= cnt - {{15 {1'b0}}, 1'b1};
-    end
-  end
-  
-  always_ff @(posedge clk_i or negedge rst_ni) begin
+sky130_fd_sc_hd__dlclkp_1 CG_1( .CLK(clk_i), .GCLK(sclk), .GATE((enable && (!last_clk || sclk))));
+/*  always_ff @(posedge clk_i or negedge rst_ni) begin
     if (~rst_ni) begin
 	sclk <= 1'b0;
     end else begin
-	sclk <= ((enable && cnt_zero) && (!last_clk || sclk) ? ~sclk : sclk);
+	sclk <= ((enable) && (!last_clk || sclk) ? ~sclk : sclk);
     end
   end
-
-  always_ff @(posedge clk_i or negedge rst_ni) begin
-    if (~rst_ni) begin
-	pos_edge <= 1'b0;
-	neg_edge <= 1'b0;
-    end else begin
-	pos_edge <= (((enable && !sclk) && cnt_one) || (!(|divider) && sclk)) || ((!(|divider) && go) && !enable);
-	neg_edge <= ((enable && sclk) && cnt_one) || ((!(|divider) && !sclk) && enable);
-    end
-  end
-
+*/
   always_comb begin
-   if(divider == 0) begin
-     clk_out = clk_i & ((enable && cnt_zero) && (!last_clk || sclk));
-   end else begin
      clk_out = sclk;
-   end
   end
 
 endmodule
