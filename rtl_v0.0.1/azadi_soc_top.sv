@@ -9,9 +9,9 @@ module azadi_soc_top (
   input logic prog,
   output logic boot_led,
   input  logic [15:0] clks_per_bit, 
-  input  logic [19:0] gpio_i,
-  output logic [19:0] gpio_o,
-  output logic [19:0] gpio_oe,
+  input  logic [13:0] gpio_i,
+  output logic [13:0] gpio_o,
+  output logic [13:0] gpio_oe,
 
   // uart-periph interface
   output logic       uart_tx,
@@ -45,9 +45,9 @@ module azadi_soc_top (
   logic [31:0] gpio_out;
   logic [31:0] gpio_oen;
   
-  assign gpio_in = {12'b0,gpio_i};
-  assign gpio_o  = gpio_out[19:0]; 
-  assign gpio_oe = gpio_oen[19:0];
+  assign gpio_in = {18'b0,gpio_i};
+  assign gpio_o  = gpio_out[13:0]; 
+  assign gpio_oe = gpio_oen[13:0];
 
   assign boot_led = system_rst_ni;
 

@@ -74,9 +74,9 @@ module azadi_soc_top_caravel (
   wire [15:0] clks_per_bit;  
 
   // gpios interface
-  wire [19:0] gpio_i;
-  wire [19:0] gpio_o;
-  wire [19:0] gpio_oe;
+  wire [13:0] gpio_i;
+  wire [13:0] gpio_o;
+  wire [13:0] gpio_oe;
 
 
   // uart-periph interface
@@ -140,11 +140,18 @@ module azadi_soc_top_caravel (
   assign io_out[9] = pwm_o_2;
   assign io_oeb[9] = ~pwm2_oe;
 
+// scan pins 
+
+  assign io_oeb[13:10] = 4'b1111;
+  assign io_out[13:10] = 4'b0;
+
+  assign io_oeb[15:14] = 2'b0;
+
 // GPIO pin mux 
 
-  assign io_out[29:10] = gpio_o;
-  assign gpio_i        = io_in[29:10];
-  assign io_oeb[29:10] = ~gpio_oe;
+  assign io_out[29:16] = gpio_o;
+  assign gpio_i        = io_in[29:16];
+  assign io_oeb[29:16] = ~gpio_oe;
 
 // BOOT LED pin
 
@@ -170,35 +177,35 @@ module azadi_soc_top_caravel (
     .vccd1(vccd1),
     .vssd1(vssd1),
   `endif
-    .clk_i(wb_clk_i),
-    .rst_ni(~wb_rst_i),
-    .prog(prog),
-    .boot_led(led),
+    .clk_i    (wb_clk_i),
+    .rst_ni   (~wb_rst_i),
+    .prog     (prog),
+    .boot_led (led),
 
     // Clocks per bits
     .clks_per_bit(clks_per_bit), 
 
     // gpios interface
-    .gpio_i(gpio_i),
-    .gpio_o(gpio_o),
-    .gpio_oe(gpio_oe),
+    .gpio_i  (gpio_i),
+    .gpio_o  (gpio_o),
+    .gpio_oe (gpio_oe),
 
     // uart-periph interface
-    .uart_tx(uart_tx), // output
-    .uart_rx(uart_rx), // input
+    .uart_tx (uart_tx), // output
+    .uart_rx (uart_rx), // input
 
     // PWM interface  
-    .pwm_o(pwm_o_1),
-    .pwm_o_2(pwm_o_2),
-    .pwm1_oe(pwm1_oe),
-    .pwm2_oe(pwm2_oe),
+    .pwm_o   (pwm_o_1),
+    .pwm_o_2 (pwm_o_2),
+    .pwm1_oe (pwm1_oe),
+    .pwm2_oe (pwm2_oe),
 
     // SPI interface
-    .ss_o(ss_o),        // [3:0] 
-    .sclk_o(sclk_o),      
-    .sd_o(sd_o),
-    .sd_oe(sd_oe),       
-    .sd_i(sd_i),
+    .ss_o    (ss_o),        // [3:0] 
+    .sclk_o  (sclk_o),      
+    .sd_o    (sd_o),
+    .sd_oe   (sd_oe),       
+    .sd_i    (sd_i),
 
 // qspi interface
 
@@ -206,7 +213,13 @@ module azadi_soc_top_caravel (
     .qcs_o   (qcs_o),
     .qsd_i   (qsd_i),
     .qsd_o   (qsd_o),
-    .qsd_oe  (qsd_oe)
+    .qsd_oe  (qsd_oe),
+    .SE	     (io_in[10]), 
+    .TM      (io_in[11]), 
+    .SI0     (io_in[12]), 
+    .SO0     (io_out[14]), 
+    .SI1     (io_in[13]), 
+    .SO1     (io_out[15])
   );
 
 endmodule
